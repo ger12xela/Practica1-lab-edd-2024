@@ -73,8 +73,10 @@ void moverCarta(){
 		default:
 			break;
 	}
+
 	if(temp != NULL){
 		if(temp->carta!=NULL){
+			int eleccion2;
 			cout<<"donde lo desea colocar"<<endl;
 			cout<<"ordenadas(1) pilas(2)"<<endl;
 			cin>>eleccion;
@@ -82,12 +84,23 @@ void moverCarta(){
 				case 1:
 					cout<<"donde lo desea colocar"<<endl;
 					cout<<"ordenada(1) ordenada(2) ordenada(3) ordenada(4)"<<endl;
+					cin>>eleccion2;
 
-					switch (eleccion) {
-						case 2:
-							montarPila(orden1, temp);
-
+					switch (eleccion2) {
+						case 1:
+							orden1 = montarPila(orden1, temp);
+							imprimirLista(orden1);
 							break;
+						case 2:
+							montarPila(orden2, temp);
+							break;
+						case 3:
+							montarPila(orden3, temp);
+							break;
+						case 4:
+							montarPila(orden4, temp);
+							break;
+
 						default:
 							break;
 					}
@@ -112,19 +125,13 @@ NodoCarta *obtener(NodoCarta* pila, int cantidad){
 		cout<<"no hay carta que sacar"<<endl;
 	}else{
 		Itemp = pila;
-		Ttemp = Itemp;
-		if (cantidad > 0) {
-			for (int i = 0; i <= cantidad; ++i) {
-				if(Ttemp->siguiente != NULL)
-					Ttemp = Ttemp->siguiente;
-			}
+		Ttemp = pila->siguiente;
+		Itemp = Ttemp;
+		pila->anterior = NULL;
+//		pila = Itemp;
+//		Itemp->siguiente = NULL;
+//		Itemp->anterior = NULL;
 
-		}
-		Itemp = Ttemp->siguiente;
-		Ttemp = Itemp->anterior;
-		pila = Itemp;
-		Ttemp->siguiente = NULL;
-		Ttemp->anterior = NULL;
 	}
 	return Itemp;
 }
@@ -140,9 +147,10 @@ NodoCarta *ScarDMazo(NodoCarta *lista){
 	NodoCarta *opt = new NodoCarta;
 
 	if(confirmarVacio(lista)){
-		opt = obtener(lista, 0);
+		ColaSalida = obtener(lista, 0);
+		opt = ColaSalida->anterior;
 		if(opt !=NULL){
-			cout<<"carta opt"<<endl;
+			cout<<"carta"<<opt->carta->nombre<<opt->carta->simbolo<<endl;
 		}
 
 	}
